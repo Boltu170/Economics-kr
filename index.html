@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Economics Quiz</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen py-8">
+    <div id="root"></div>
+
+```
+<script type="text/babel">
+    const { useState } = React;
+    
+    const CheckCircle = ({ className, size }) => (
+        <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+    );
+
+    const XCircle = ({ className, size }) => (
+        <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+        </svg>
+    );
+
+    const RotateCcw = ({ size }) => (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+        </svg>
+    );
+
+    const Quiz = () => {
+        const [currentQuestion, setCurrentQuestion] = useState(0);
+        const [selectedAnswer, setSelectedAnswer] = useState(null);
+        const [showExplanation, setShowExplanation] = useState(false);
+        const [score, setScore] = useState(0);
+        const [quizComplete, setQuizComplete] = useState(false);
+
+        const questions = [
+            {
+                question: "According to the lecture, what is the fundamental economic problem?",
+                options: [
+                    "Unemployment",
+                    "Scarcity - limited resources but unlimited wants",
+                    "Inflation",
+                    "Market failure"
+                ],
+                correct: 1,
+                explanation: "Scarcity is the fundamental economic problem. Resources are limited but wants are unlimited, forcing us to make choices. This drives all economic decision-making."
+            },
+            {
+                question: "Which of the following is a NORMATIVE economic statement?",
+                options: [
+                    "Unemployment is currently 5%",
+                    "Tuition fees are £9,250 per year",
+                    "Housing prices have increased by 150%",
+                    "Tuition fees are too expensive"
+                ],
+                correct: 3,
+                explanation: "Normative statements involve value judgments about what SHOULD be. 'Too expensive' is an opinion. The other options are positive statements - factual claims about what IS."
+            },
+            {
+                question: "Based on the housing data presented, what is the PRIMARY cause of the UK housing crisis?",
+                options: [
+                    "Not enough houses have been built",
+                    "The population has grown too quickly",
+                    "Distribution problems - who owns and controls housing",
+                    "There are too many vacant homes"
+                ],
+                correct: 2,
+                explanation: "The lecture shows that housing has grown faster than population, and there are 1.6 million vacant homes. The crisis is about WHO builds and controls housing, and the rules they operate under - a distribution problem, not a shortage."
+            },
+            {
+                question: "If you choose to study for an exam instead of going to a concert with friends, what is the opportunity cost?",
+                options: [
+                    "The price of the concert ticket",
+                    "The time spent studying",
+                    "The value of attending the concert and the experience with friends",
+                    "The grade you get on the exam"
+                ],
+                correct: 2,
+                explanation: "Opportunity cost is the value of the next best alternative you give up. It's not just the ticket price - it's the entire experience of going to the concert with friends that you're sacrificing."
+            },
+            {
+                question: "Which of the five key questions economics asks relates to 'Who can afford the latest iPhone vs a budget phone'?",
+                options: [
+                    "Priorities",
+                    "Technology",
+                    "Actors",
+                    "Distribution"
+                ],
+                correct: 3,
+                explanation: "Distribution asks 'Who gets the goods and services?' The question about who can afford different phones is about how products are distributed across society."
+            },
+            {
+                question: "According to the lecture, in 1997 the average house cost about 3.5 times average earnings. What is it approximately today?",
+                options: [
+                    "5-6 times",
+                    "8-9 times",
+                    "12-13 times",
+                    "15-16 times"
+                ],
+                correct: 1,
+                explanation: "The lecture states that house prices have risen from about 3.5 times average earnings in 1997 to around 8-9 times today. For someone earning £30,000, this means a house went from £105,000 to £270,000."
+            },
+            {
+                question: "A university ties lecturer bonuses to student satisfaction scores, hoping to improve teaching. Instead, some lecturers make classes easier. This is an example of:",
+                options: [
+                    "A trade-off",
+                    "Opportunity cost",
+                    "A perverse incentive",
+                    "Scarcity"
+                ],
+                correct: 2,
+                explanation: "This is a perverse incentive - when incentives accidentally encourage the opposite of what you want. The policy aimed to improve teaching but instead encouraged grade inflation and easier classes."
+            },
+            {
+                question: "What major shift occurred in who builds housing in the UK since 1969?",
+                options: [
+                    "Local authorities (government) now build most housing",
+                    "Private enterprise now builds almost all housing instead of government",
+                    "Housing associations have taken over from private builders",
+                    "International developers have replaced UK builders"
+                ],
+                correct: 1,
+                explanation: "The lecture shows that in 1969, local authorities built lots of housing. Now, private enterprise builds almost everything with very little government building. This shift in actors has significant implications for affordability."
+            },
+            {
+                question: "Which statement is POSITIVE rather than normative?",
+                options: [
+                    "The government should build more affordable housing",
+                    "Income inequality is unfair",
+                    "Private rental has grown massively in the UK",
+                    "Minimum wage is too low"
+                ],
+                correct: 2,
+                explanation: "Positive statements are factual, about what IS. 'Private rental has grown massively' is a factual observation. The others involve value judgments (should, unfair, too low)."
+            },
+            {
+                question: "Macroeconomics would study:",
+                options: [
+                    "Why a specific coffee shop charges £3.50 for a latte",
+                    "How a single firm decides its production level",
+                    "Why overall inflation hit 10% across the economy",
+                    "How one consumer chooses between products"
+                ],
+                correct: 2,
+                explanation: "Macroeconomics studies the economy as a whole - big picture issues like inflation, unemployment, and growth across the entire economy. The other options are microeconomic questions about individual actors."
+            },
+            {
+                question: "You have £50 and want trainers (£60), a night out (£30), textbooks (£40), and groceries (£25). This situation demonstrates:",
+                options: [
+                    "Opportunity cost only",
+                    "Scarcity and the need to make choices",
+                    "A perverse incentive",
+                    "Normative economics"
+                ],
+                correct: 1,
+                explanation: "This demonstrates scarcity in action. You have limited resources (£50) but unlimited wants (£155 worth of things), forcing you to make choices about what to buy."
+            },
+            {
+                question: "According to the lecture data, approximately how many vacant homes are there in the UK?",
+                options: [
+                    "500,000",
+                    "1.6 million",
+                    "3 million",
+                    "5 million"
+                ],
+                correct: 1,
+                explanation: "The lecture states there are 1.6 million vacant homes in the UK, supporting the argument that the housing crisis is about distribution rather than shortage."
+            },
+            {
+                question: "Which of these is a microeconomic topic?",
+                options: [
+                    "National unemployment rates",
+                    "Economic growth across the country",
+                    "How firms operate and make decisions",
+                    "The overall inflation rate"
+                ],
+                correct: 2,
+                explanation: "Microeconomics studies individual parts of the economy, including how firms operate, consumer choices, and specific markets. The other options are macroeconomic topics about the economy as a whole."
+            },
+            {
+                question: "The 'Actors' question in economics asks:",
+                options: [
+                    "What methods do we use to produce things?",
+                    "What should we produce and how much?",
+                    "Who's in charge of production and distribution?",
+                    "Who makes decisions and what rules exist?"
+                ],
+                correct: 2,
+                explanation: "The 'Actors' question asks 'Who's in charge of production and distribution?' For example, is it Apple, Samsung, or Chinese manufacturers making smartphones?"
+            },
+            {
+                question: "If you do a work placement earning £2,000 instead of backpacking through Europe, and the experience of traveling is worth more than £2,000 to you, what is the opportunity cost of the placement?",
+                options: [
+                    "£2,000",
+                    "The cost of the backpacking trip",
+                    "The value of the backpacking experience (worth more than £2,000 to you)",
+                    "There is no opportunity cost since you earned money"
+                ],
+                correct: 2,
+                explanation: "Opportunity cost is the value of what you give up - in this case, the backpacking experience. The lecture emphasizes it's not just about money; it's about what the alternative is worth to you, including experiences."
+            }
+        ];
+
+        const handleAnswer = (index) => {
+            setSelectedAnswer(index);
+            setShowExplanation(true);
+            if (index === questions[currentQuestion].correct) {
+                setScore(score + 1);
+            }
+        };
+
+        const handleNext = () => {
+            if (currentQuestion < questions.length - 1) {
+                setCurrentQuestion(currentQuestion + 1);
+                setSelectedAnswer(null);
+                setShowExplanation(false);
+            } else {
+                setQuizComplete(true);
+            }
+        };
+
+        const resetQuiz = () => {
+            setCurrentQuestion(0);
+            setSelectedAnswer(null);
+            setShowExplanation(false);
+            setScore(0);
+            setQuizComplete(false);
+        };
+
+        const getScoreColor = () => {
+            const percentage = (score / questions.length) * 100;
+            if (percentage >= 80) return 'text-green-600';
+            if (percentage >= 60) return 'text-yellow-600';
+            return 'text-red-600';
+        };
+
+        if (quizComplete) {
+            const percentage = Math.round((score / questions.length) * 100);
+            return (
+                <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+                    <div className="text-center">
+                        <h2 className="text-3xl font-bold mb-4">Quiz Complete!</h2>
+                        <div className={`text-6xl font-bold mb-4 ${getScoreColor()}`}>
+                            {score}/{questions.length}
+                        </div>
+                        <p className="text-xl mb-2">You scored {percentage}%</p>
+                        <p className="text-gray-600 mb-6">
+                            {percentage >= 80 && "Excellent work! You have a strong grasp of the material."}
+                            {percentage >= 60 && percentage < 80 && "Good job! Review the explanations for questions you missed."}
+                            {percentage < 60 && "Keep studying! Review the lecture notes and try again."}
+                        </p>
+                        <button
+                            onClick={resetQuiz}
+                            className="bg-blue-600 text-white px-6 py-3 rounded-lg flex items-center gap-2 mx-auto hover:bg-blue-700 transition"
+                        >
+                            <RotateCcw size={20} />
+                            Retake Quiz
+                        </button>
+                    </div>
+                </div>
+            );
+        }
+
+        const q = questions[currentQuestion];
+
+        return (
+            <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+                <div className="mb-6">
+                    <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm text-gray-600">
+                            Question {currentQuestion + 1} of {questions.length}
+                        </span>
+                        <span className="text-sm font-semibold text-blue-600">
+                            Score: {score}/{questions.length}
+                        </span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div
+                            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                            style={{ width: `${((currentQuestion) / questions.length) * 100}%` }}
+                        />
+                    </div>
+                </div>
+
+                <h2 className="text-2xl font-bold mb-6">{q.question}</h2>
+
+                <div className="space-y-3 mb-6">
+                    {q.options.map((option, index) => {
+                        let buttonClass = "w-full text-left p-4 rounded-lg border-2 transition-all ";
+                        
+                        if (selectedAnswer === null) {
+                            buttonClass += "border-gray-300 hover:border-blue-400 hover:bg-blue-50";
+                        } else if (index === q.correct) {
+                            buttonClass += "border-green-500 bg-green-50";
+                        } else if (index === selectedAnswer) {
+                            buttonClass += "border-red-500 bg-red-50";
+                        } else {
+                            buttonClass += "border-gray-300 opacity-50";
+                        }
+
+                        return (
+                            <button
+                                key={index}
+                                onClick={() => !showExplanation && handleAnswer(index)}
+                                disabled={showExplanation}
+                                className={buttonClass}
+                            >
+                                <div className="flex items-center justify-between">
+                                    <span>{option}</span>
+                                    {showExplanation && index === q.correct && (
+                                        <CheckCircle className="text-green-600" size={24} />
+                                    )}
+                                    {showExplanation && index === selectedAnswer && index !== q.correct && (
+                                        <XCircle className="text-red-600" size={24} />
+                                    )}
+                                </div>
+                            </button>
+                        );
+                    })}
+                </div>
+
+                {showExplanation && (
+                    <div className="mb-6 p-4 bg-blue-50 border-l-4 border-blue-600 rounded">
+                        <h3 className="font-semibold mb-2 text-blue-900">Explanation:</h3>
+                        <p className="text-gray-700">{q.explanation}</p>
+                    </div>
+                )}
+
+                {showExplanation && (
+                    <button
+                        onClick={handleNext}
+                        className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                    >
+                        {currentQuestion < questions.length - 1 ? 'Next Question' : 'See Results'}
+                    </button>
+                )}
+            </div>
+        );
+    };
+
+    ReactDOM.render(<Quiz />, document.getElementById('root'));
+</script>
+```
+
+</body>
+</html>
